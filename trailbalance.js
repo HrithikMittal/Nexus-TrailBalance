@@ -91,8 +91,6 @@ MongoClient.connect(
                     }
                 }
             });
-            console.log(res1);
-            console.log(res0);
 
             dbo.collection("trail").find({}).toArray(function (err, result) {
                 if (err) throw err;
@@ -100,14 +98,15 @@ MongoClient.connect(
 
                     if (result[i].trailname == value1) {
                         flag1 = 1;
-                        if (result[i].creditamount > 0) {
-                            temp5 = result[i].creditamount;
-                        }
-                        if (result[i].debitamount > 0) {
-                            temp5 = result[i].debitamount;
-                        }
-                        console.log(temp5);
-                        temp5 = temp5 + res0;
+                        // if (result[i].creditamount > 0) {
+                        //     temp5 = result[i].creditamount;
+                        // }
+                        // if (result[i].debitamount > 0) {
+                        //     temp5 = result[i].debitamount;
+                        // }
+                        // console.log(temp5);
+                        temp5 = res0;
+
                         if (temp5 > 0) {
                             myalr = {
                                 trailname: value1,
@@ -139,14 +138,16 @@ MongoClient.connect(
 
                     if (result[i].trailname == value2) {
                         flag2 = 1;
-                        if (result[i].creditamount > 0) {
-                            temp6 = result[i].creditamount;
-                        }
-                        if (result[i].debitamount > 0) {
-                            temp6 = result[i].debitamount;
-                        }
+                        // if (result[i].creditamount > 0) {
+                        //     temp6 = result[i].creditamount;
+                        // }
+                        // if (result[i].debitamount > 0) {
+                        //     temp6 = result[i].debitamount;
+                        // }
                         console.log("Helo");
-                        temp6 = temp6 + res1;
+                        temp6 = res1;
+                        console.log("this is value of temp6 " + temp6);
+                        console.log("this is value of res1 " + res1);
                         if (temp6 > 0) {
                             myalra = {
                                 trailname: value2,
@@ -167,7 +168,7 @@ MongoClient.connect(
                             myupb = {
                                 trailname: value2,
                                 creditamount: 0,
-                                debitamount: temp5,
+                                debitamount: temp6,
                             };
                             dbo.collection("trail").updateOne(myalrb, {
                                 $set: myupb
