@@ -58,6 +58,7 @@ MongoClient.connect(
             casht.toname = req.body.toname;
             var value1 = casht.fromname;
             var value2 = casht.toname;
+            console.log(value2);
             // var temp1 = 0;
             // var temp2 = 0;
             // var temp3 = 0;
@@ -65,7 +66,8 @@ MongoClient.connect(
 
             var temp5 = 0;
             var temp6 = 0;
-
+            var res0 = 0;
+            var res1 = 0;
             var flag1 = 0;
             var flag2 = 0;
 
@@ -77,14 +79,20 @@ MongoClient.connect(
                         temp1 = result[i].creditamount;
                         temp2 = result[i].debitamount;
                         res0 = temp1 - temp2;
+                        console.log("Hellllo");
+                        console.log(res0);
                     }
                     if (result[i].nameledger == value2) {
                         temp3 = result[i].creditamount;
                         temp4 = result[i].debitamount;
                         res1 = temp3 - temp4;
+                        console.log("Hlo");
+                        console.log(res1 + "hehe");
                     }
                 }
             });
+            console.log(res1);
+            console.log(res0);
 
             dbo.collection("trail").find({}).toArray(function (err, result) {
                 if (err) throw err;
@@ -98,15 +106,16 @@ MongoClient.connect(
                         if (result[i].debitamount > 0) {
                             temp5 = result[i].debitamount;
                         }
+                        console.log(temp5);
                         temp5 = temp5 + res0;
                         if (temp5 > 0) {
                             myalr = {
-                                trailname: "casht.fromname",
+                                trailname: value1,
                             };
                             myup = {
-                                trailname: "casht.fromname",
-                                credit: temp5,
-                                debit: 0,
+                                trailname: value1,
+                                creditamount: temp5,
+                                debitamount: 0,
                             };
                             dbo.collection("trail").updateOne(myalr, {
                                 $set: myup
@@ -114,12 +123,12 @@ MongoClient.connect(
 
                         } else if (temp5 <= 0) {
                             myalr = {
-                                trailname: "casht.fromname",
+                                trailname: value1,
                             };
                             myup = {
-                                trailname: "casht.fromname",
-                                credit: 0,
-                                debit: temp5,
+                                trailname: value1,
+                                creditamount: 0,
+                                debitamount: temp5,
                             };
                             dbo.collection("trail").updateOne(myalr, {
                                 $set: myup
@@ -136,15 +145,16 @@ MongoClient.connect(
                         if (result[i].debitamount > 0) {
                             temp6 = result[i].debitamount;
                         }
-                        temp6 = temp6 + res0;
+                        console.log("Helo");
+                        temp6 = temp6 + res1;
                         if (temp6 > 0) {
                             myalra = {
-                                trailname: "casht.toname",
+                                trailname: value2,
                             };
                             myupa = {
-                                trailname: "casht.toname",
-                                credit: temp6,
-                                debit: 0,
+                                trailname: value2,
+                                creditamount: temp6,
+                                debitamount: 0,
                             };
                             dbo.collection("trail").updateOne(myalra, {
                                 $set: myupa
@@ -152,26 +162,25 @@ MongoClient.connect(
 
                         } else if (temp6 <= 0) {
                             myalrb = {
-                                trailname: "casht.toname",
+                                trailname: value2,
                             };
                             myupb = {
-                                trailname: "casht.toame",
-                                credit: 0,
-                                debit: temp5,
+                                trailname: value2,
+                                creditamount: 0,
+                                debitamount: temp5,
                             };
                             dbo.collection("trail").updateOne(myalrb, {
                                 $set: myupb
                             });
-
                         }
                     }
                 }
                 if (flag1 == 0) {
                     if (res0 > 0) {
                         myobj = {
-                            trail: "casht.fromname",
-                            credit: res0,
-                            debit: 0,
+                            trailname: value1,
+                            creditamount: res0,
+                            debitamount: 0,
                         };
                         dbo.collection("trail").insertOne(myobj, function (err, res) {
                             if (err) throw err;
@@ -179,9 +188,9 @@ MongoClient.connect(
                         });
                     } else if (res0 <= 0) {
                         myobj = {
-                            trail: "casht.fromname",
-                            credit: 0,
-                            debit: res0,
+                            trailname: value1,
+                            creditamount: 0,
+                            debitamount: res0,
                         };
                         dbo.collection("trail").insertOne(myobj, function (err, res) {
                             if (err) throw err;
@@ -191,23 +200,27 @@ MongoClient.connect(
 
                 }
                 if (flag2 == 0) {
+                    console.log("Bye");
+                    console.log(res1);
                     if (res1 > 0) {
-                        myobj = {
-                            trail: "casht.toname",
-                            credit: res1,
-                            debit: 0,
+                        myobjz = {
+                            trailname: value2,
+                            creditamount: res1,
+                            debitamount: 0,
                         };
-                        dbo.collection("trail").insertOne(myobj, function (err, res) {
+                        console.log("Bye");
+                        dbo.collection("trail").insertOne(myobjz, function (err, res) {
                             if (err) throw err;
                             console.log("1 document inserted");
                         });
                     } else if (res1 <= 0) {
-                        myobj = {
-                            trail: "casht.toname",
-                            credit: 0,
-                            debit: res1,
+                        myobjzz = {
+                            trailname: value2,
+                            creditamount: 0,
+                            debitamount: res1,
                         };
-                        dbo.collection("trail").insertOne(myobj, function (err, res) {
+                        console.log("Bye");
+                        dbo.collection("trail").insertOne(myobjzz, function (err, res) {
                             if (err) throw err;
                             console.log("1 document inserted");
                         });
