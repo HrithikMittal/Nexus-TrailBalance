@@ -14,7 +14,6 @@ app.use(
     bodyParser.urlencoded({
         extended: true
     })
-
 );
 app.use(bodyParser.json());
 
@@ -77,15 +76,15 @@ MongoClient.connect(
                 for (i = 0; i < result.length; i++) {
 
                     if (result[i].nameledger == value1) {
-                        temp1 = parseInt(result[i].creditamount);
-                        temp2 = parseInt(result[i].debitamount);
+                        temp1 = result[i].creditamount;
+                        temp2 = result[i].debitamount;
                         res0 = temp1 - temp2;
                         console.log("Hellllo");
                         console.log(res0);
                     }
                     if (result[i].nameledger == value2) {
-                        temp3 = parseInt(result[i].creditamount);
-                        temp4 = parseInt(result[i].debitamount);
+                        temp3 = result[i].creditamount;
+                        temp4 = result[i].debitamount;
                         res1 = temp3 - temp4;
                         console.log("Hlo");
                         console.log(res1 + "hehe");
